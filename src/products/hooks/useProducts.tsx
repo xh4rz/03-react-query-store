@@ -10,7 +10,7 @@ export const useProducts = ({ filterkey }: Options) => {
 		isLoading,
 		isError,
 		error,
-		data: products,
+		data: products = [],
 		isFetching
 	} = useQuery({
 		queryKey: ['products', { filterkey }],

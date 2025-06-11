@@ -1,12 +1,17 @@
-import { ProductList } from ".."
+import { ProductList, useProducts } from '..';
 
 export const MensPage = () => {
-  return (
-    <div className="flex-col">
-      <h1 className="text-2xl font-bold">Productos para hombres</h1>
+	const { isLoading, products } = useProducts({
+		filterkey: "men's clothing"
+	});
 
-      <ProductList />
+	return (
+		<div className="flex-col">
+			<h1 className="text-2xl font-bold">Productos para hombres</h1>
 
-    </div>
-  )
-}
+			{isLoading && <p>Cargando...</p>}
+
+			<ProductList products={products} />
+		</div>
+	);
+};
