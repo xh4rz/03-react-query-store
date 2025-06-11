@@ -7,3 +7,7 @@ export { NewProduct } from './pages/NewProduct';
 export { WomensPage } from './pages/WomensPage';
 export type { Product } from './interfaces/product';
 export { productsApi } from './api/productsApi';
+
+export { useProducts } from './hooks/useProducts';
+
+export * as productActions from './services/actions';
