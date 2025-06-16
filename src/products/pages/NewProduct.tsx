@@ -10,7 +10,18 @@ interface FormInputs {
 }
 
 export const NewProduct = () => {
-	const { control, handleSubmit } = useForm<FormInputs>();
+	const { control, handleSubmit, watch } = useForm<FormInputs>({
+		defaultValues: {
+			title: 'Teclado',
+			price: 150.22,
+			description: 'Teclado mecánico',
+			category: "men's clothing",
+			image:
+				'https://media.istockphoto.com/id/1164069847/vector/cartoon-black-and-white-computer-keyboard-template-set-vector.jpg?s=1024x1024&w=is&k=20&c=CuDEaofOzPzvTVE89-Ba82FWtjC8HIRJX58yQuwAJXU='
+		}
+	});
+
+	const newImage = watch('image');
 
 	const onSubmit: SubmitHandler<FormInputs> = (data) => {
 		console.log(data);
@@ -45,7 +56,7 @@ export const NewProduct = () => {
 							render={({ field }) => (
 								<Input
 									value={field.value?.toString()}
-									onChange={field.onChange}
+									onChange={(e) => field.onChange(Number(e.target.value))}
 									className="mt-2"
 									type="number"
 									label="Precio del producto"
@@ -63,7 +74,7 @@ export const NewProduct = () => {
 									onChange={field.onChange}
 									className="mt-2"
 									type="url"
-									label="Url del producto"
+									label="Url de la imagen del producto"
 								/>
 							)}
 						/>
@@ -113,7 +124,7 @@ export const NewProduct = () => {
 							height: '600px'
 						}}
 					>
-						<Image src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg" />
+						<Image src={newImage} />
 					</div>
 				</div>
 			</form>
