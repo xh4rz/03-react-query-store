@@ -11,6 +11,8 @@ export const sleep = (seconds: number): Promise<boolean> => {
 export const getProducts = async ({
 	filterkey
 }: GetProductsOptions): Promise<Product[]> => {
+	await sleep(2);
+
 	const filterUrl = filterkey ? `?category=${filterkey}` : '';
 
 	const { data } = await productsApi.get<Product[]>(`/products${filterUrl}`);
@@ -34,6 +36,8 @@ export interface ProductLike {
 }
 
 export const createProduct = async (product: ProductLike) => {
+	await sleep(2);
+
 	const { data } = await productsApi.post<Product>(`/products`, product);
 
 	return data;
