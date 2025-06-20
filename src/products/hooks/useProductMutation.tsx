@@ -23,18 +23,30 @@ export const useProductMutation = () => {
 					return [...oldData, optimisticProduct];
 				}
 			);
+
+			return { optimisticProduct };
 		},
-		onSuccess: (data) => {
+		onSuccess: (data, variables, context) => {
 			// queryClient.invalidateQueries({
 			// 	queryKey: ['products', { filterkey: data.category }]
 			// });
+
+			console.log({ data, variables, context });
+
+			queryClient.removeQueries({
+				queryKey: ['product', context?.optimisticProduct.id]
+			});
 
 			queryClient.setQueryData<Product[]>(
 				['products', { filterkey: data.category }],
 				(oldData: Product[] | undefined) => {
 					if (!oldData) return [data];
 
-					return [...oldData, data];
+					return oldData.map((cacheProduct) => {
+						return cacheProduct.id === context?.optimisticProduct.id
+							? data
+							: cacheProduct;
+					});
 				}
 			);
 		}
